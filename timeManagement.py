@@ -72,7 +72,7 @@ def commitHours(creds):
         today= datetime.date.today()
         timeStart = str(today) + "T00:00:00Z"
         timeEnd = str(today) + "T23:59:59Z" # 'Z' indicates UTC time
-        print("Getting today's coding hours")
+        print("Getting today's Workout hours")
         events_result = service.events().list(calendarId=YOUR_CALENDAR_ID, timeMin=timeStart, timeMax=timeEnd, singleEvents=True, orderBy='startTime', timeZone=YOUR_TIMEZONE).execute()
         events = events_result.get('items', [])
 
@@ -86,7 +86,7 @@ def commitHours(creds):
         hours=0,
         )
         id = 0
-        print("CODING HOURS:")
+        print("WORKOUT HOURS:")
         for event in events:
             start = event['start'].get('dateTime', event['start'].get('date'))
             end = event['end'].get('dateTime', event['end'].get('date'))
@@ -105,10 +105,10 @@ def commitHours(creds):
         date = datetime.date.today()
 
         formatted_total_duration = total_duration.seconds/60/60
-        coding_hours = (date, 'CODING', formatted_total_duration) 
+        coding_hours = (date, 'WORKOUT', formatted_total_duration) 
         cur.execute("INSERT INTO hours VALUES(?, ?, ?);", coding_hours)
         conn.commit()
-        print("Coding hours added to database successfully")
+        print("Workout hours added to database successfully")
 
     except HttpError as error:
         print('An error occurred: %s' % error)
